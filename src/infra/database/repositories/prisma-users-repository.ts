@@ -1,5 +1,8 @@
 import { Users } from "@/app/entities/users-entity";
-import { IUserResponse } from "@/app/interfaces/users-interfaces";
+import {
+  IUserResponse,
+  IUserWithPasswordResponse,
+} from "@/app/interfaces/users-interfaces";
 import { UsersRepository } from "@/app/repositories/users-repository";
 
 import { prisma } from "../prisma-service";
@@ -21,7 +24,9 @@ export class PrismaUsersRepository implements UsersRepository {
 
     return PrismaUsersMapper.toDomain(user);
   }
-  async findByUsername(username: string): Promise<IUserResponse | null> {
+  async findByUsername(
+    username: string
+  ): Promise<IUserWithPasswordResponse | null> {
     const user = await prisma.users.findFirst({
       where: { username },
     });
