@@ -21,7 +21,6 @@ export class Server {
   }
 
   public routes() {
-    console.log(this.baseUrl);
     this.app.use(`${this.baseUrl}/users`);
   }
 
