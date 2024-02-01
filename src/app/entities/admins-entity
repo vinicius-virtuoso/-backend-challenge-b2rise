@@ -1,17 +1,23 @@
-import { IUserRequest } from "@app/interfaces/users-interfaces";
+import { IAdminRequest } from "./../interfaces/admins-interfaces";
 import { randomUUID } from "node:crypto";
 
-export class Users {
+export class Admins {
   private _id: string;
-  private props: IUserRequest;
+  private _is_admin: boolean;
+  private props: IAdminRequest;
 
-  constructor(props: IUserRequest, id?: string) {
+  constructor(props: IAdminRequest, id?: string) {
     this._id = id ?? randomUUID();
+    this._is_admin = true;
     this.props = props;
   }
 
   public get id(): string {
     return this._id;
+  }
+
+  public get is_admin(): boolean {
+    return this._is_admin;
   }
 
   public get username(): string {
