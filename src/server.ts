@@ -5,6 +5,7 @@ import express, { Express } from "express";
 import { authRoutes } from "./infra/http/routes/auth-router";
 import { errorHandler } from "@/app/error";
 import { usersRoutes } from "./infra/http/routes/users-router";
+import { adminsRoutes } from "./infra/http/routes/admins-router";
 
 export class Server {
   private app: Express;
@@ -23,6 +24,7 @@ export class Server {
 
   public routes() {
     this.app.use("/auth", authRoutes);
+    this.app.use("/admin", adminsRoutes);
     this.app.use("/users", usersRoutes);
   }
 
