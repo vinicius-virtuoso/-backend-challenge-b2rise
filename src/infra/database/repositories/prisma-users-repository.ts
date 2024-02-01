@@ -27,4 +27,14 @@ export class PrismaUsersRepository implements UsersRepository {
     });
     return user ? PrismaUsersMapper.toDomainWithPassword(user) : null;
   }
+
+  async findByUsernameOrEmail(
+    email: string,
+    username: string
+  ): Promise<IUserResponse | null> {
+    const user = await prisma.users.findFirst({
+      where: { OR: [{ email }, { username }] },
+    });
+    return user ? PrismaUsersMapper.toDomain(user) : null;
+  }
 }

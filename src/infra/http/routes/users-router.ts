@@ -1,6 +1,15 @@
 import { Router } from "express";
-import { usersController } from "../controllers/users-controller";
+import { UsersController } from "../controllers/users-controller";
+import { PrismaUsersRepository } from "@/infra/database/repositories/prisma-users-repository";
+import { userAlreadyExists } from "@/app/middlewares/users-middleware/user-already-exists";
+
+const usersRepository = new PrismaUsersRepository();
+const usersController = new UsersController(usersRepository);
 
 export const usersRoutes = Router();
 
-usersRoutes.post("/", usersController.create);
+usersRoutes.post(
+  "/",
+  userAlreadyExists(usersRepository),
+  usersController.create
+);

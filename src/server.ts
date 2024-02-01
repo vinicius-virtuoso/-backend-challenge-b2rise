@@ -26,7 +26,7 @@ export class Server {
   public init(port: number = 3000) {
     this.middlewares();
     this.routes();
-    // this.erroServer();
+    this.erroServer();
 
     this.app.listen(port, () => {
       console.log("listening on port " + port);

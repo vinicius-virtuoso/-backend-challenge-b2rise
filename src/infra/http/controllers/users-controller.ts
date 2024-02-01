@@ -1,11 +1,10 @@
 import { IUserRequest } from "@/app/interfaces/users-interfaces";
 import { UsersRepository } from "@/app/repositories/users-repository";
 import { userCreateService } from "@/app/services/users/users-create";
-import { PrismaUsersRepository } from "@/infra/database/repositories/prisma-users-repository";
 
 import { Request, Response } from "express";
 
-class UsersController {
+export class UsersController {
   usersRepository: UsersRepository;
 
   constructor(userRepository: UsersRepository) {
@@ -34,5 +33,3 @@ class UsersController {
     return res.status(204).json();
   }
 }
-
-export const usersController = new UsersController(new PrismaUsersRepository());
