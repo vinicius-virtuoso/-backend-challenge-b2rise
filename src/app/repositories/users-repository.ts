@@ -21,4 +21,6 @@ export abstract class UsersRepository {
     userId: string,
     data: Partial<IUserRequest>
   ): Promise<IUserResponse>;
+
+  abstract delete(userId: string): Promise<void>;
 }

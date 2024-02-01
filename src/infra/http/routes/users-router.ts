@@ -12,18 +12,18 @@ const usersController = new UsersController(usersRepository);
 
 export const usersRoutes = Router();
 
+usersRoutes.get("/profile", validateToken, usersController.findOne);
 usersRoutes.post(
   "/",
   validateBody(userSchemaRequest),
   userAlreadyExists(usersRepository),
   usersController.create
 );
-
-usersRoutes.get("/profile", validateToken, usersController.findOne);
-
 usersRoutes.patch(
   "/profile",
   validateToken,
   userDuplicatedExists(usersRepository),
   usersController.update
 );
+
+usersRoutes.delete("/profile", validateToken, usersController.delete);
