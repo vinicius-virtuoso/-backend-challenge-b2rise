@@ -4,6 +4,7 @@ import { PrismaUsersRepository } from "@/infra/database/repositories/prisma-user
 import { userAlreadyExists } from "@/app/middlewares/users-middleware/user-already-exists";
 import { userSchemaRequest } from "@/app/interfaces/users-interfaces";
 import { validateBody } from "@/app/middlewares/validate-body";
+import { validateToken } from "@/app/security/token/validate-token";
 
 const usersRepository = new PrismaUsersRepository();
 const usersController = new UsersController(usersRepository);
@@ -16,3 +17,5 @@ usersRoutes.post(
   userAlreadyExists(usersRepository),
   usersController.create
 );
+
+usersRoutes.get("/profile", validateToken, usersController.findOne);

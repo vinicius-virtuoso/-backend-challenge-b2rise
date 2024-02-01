@@ -1,6 +1,7 @@
 import { IUserRequest } from "@/app/interfaces/users-interfaces";
 import { UsersRepository } from "@/app/repositories/users-repository";
 import { userCreateService } from "@/app/services/users/users-create";
+import { userGetService } from "@/app/services/users/users-get";
 
 import { Request, Response } from "express";
 
@@ -18,7 +19,9 @@ export class UsersController {
   }
 
   async findOne(req: Request, res: Response) {
-    return res.status(200).json();
+    console.log(req.user);
+    const user = await userGetService(req.user.id, this.usersRepository);
+    return res.status(200).json(user);
   }
 
   async findAll(req: Request, res: Response) {

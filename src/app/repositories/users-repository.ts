@@ -13,4 +13,6 @@ export abstract class UsersRepository {
     email: string,
     username: string
   ): Promise<IUserResponse | null>;
+
+  abstract findById(id: string): Promise<IUserResponse | null>;
 }
