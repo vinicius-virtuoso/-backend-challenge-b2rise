@@ -1,6 +1,8 @@
 import "express-async-errors";
 import "dotenv/config";
+
 import express, { Express } from "express";
+import { authRoutes } from "./infra/http/routes/auth-router";
 import { errorHandler } from "@/app/error";
 import { usersRoutes } from "./infra/http/routes/users-router";
 
@@ -20,6 +22,7 @@ export class Server {
   }
 
   public routes() {
+    this.app.use("/auth", authRoutes);
     this.app.use("/users", usersRoutes);
   }
 

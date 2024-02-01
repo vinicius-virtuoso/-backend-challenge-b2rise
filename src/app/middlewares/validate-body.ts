@@ -10,6 +10,5 @@ export const validateBody =
     console.log(validation);
 
     req.body = validation;
-    console.log(req.body);
     return next();
   };
