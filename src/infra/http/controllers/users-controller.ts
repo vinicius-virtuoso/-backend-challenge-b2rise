@@ -1,9 +1,9 @@
 import { IUserRequest } from "@/app/interfaces/users-interfaces";
 import { UsersRepository } from "@/app/repositories/users-repository";
 import { userCreateService } from "@/app/services/users/users-create";
-import { usersDeleteService } from "@/app/services/users/users-delete";
+import { userDeleteService } from "@/app/services/users/users-delete";
 import { userGetService } from "@/app/services/users/users-get";
-import { usersUpdateService } from "@/app/services/users/users-update";
+import { userUpdateService } from "@/app/services/users/users-update";
 
 import { Request, Response } from "express";
 
@@ -30,7 +30,7 @@ export class UsersController {
   }
 
   async update(req: Request, res: Response) {
-    const user = await usersUpdateService(
+    const user = await userUpdateService(
       req.user.id,
       req.body,
       this.usersRepository
@@ -39,7 +39,7 @@ export class UsersController {
   }
 
   async delete(req: Request, res: Response) {
-    await usersDeleteService(req.user.id, this.usersRepository);
+    await userDeleteService(req.user.id, this.usersRepository);
     return res.status(204).json();
   }
 }
