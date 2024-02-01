@@ -2,10 +2,11 @@ import "express-async-errors";
 import "dotenv/config";
 
 import express, { Express } from "express";
-import { authRoutes } from "./infra/http/routes/auth-router";
 import { errorHandler } from "@/app/error";
 import { usersRoutes } from "./infra/http/routes/users-router";
 import { adminsRoutes } from "./infra/http/routes/admins-router";
+import { authAdminRoutes } from "./infra/http/routes/auth-admin-router";
+import { authUserRoutes } from "./infra/http/routes/auth-user-router";
 
 export class Server {
   private app: Express;
@@ -23,7 +24,8 @@ export class Server {
   }
 
   public routes() {
-    this.app.use("/auth", authRoutes);
+    this.app.use("/admin/auth", authAdminRoutes);
+    this.app.use("/user/auth", authUserRoutes);
     this.app.use("/admin", adminsRoutes);
     this.app.use("/users", usersRoutes);
   }

@@ -35,7 +35,7 @@ export class PrismaAdminsRepository implements AdminsRepository {
     userId: string,
     data: Partial<IAdminRequest>
   ): Promise<IAdminResponse> {
-    const user = await prisma.users.update({
+    const user = await prisma.admins.update({
       where: { id: userId },
       data,
     });

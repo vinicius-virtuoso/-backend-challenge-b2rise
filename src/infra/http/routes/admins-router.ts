@@ -5,6 +5,7 @@ import { adminSchemaRequest } from "@/app/interfaces/admins-interfaces";
 import { adminAlreadyExists } from "@/app/middlewares/admins-middleware/admin-already-exists";
 import { PrismaAdminsRepository } from "@/infra/database/repositories/prisma-admins-repository";
 import { validateToken } from "@/app/security/token/validate-token";
+import { adminDuplicatedExists } from "@/app/middlewares/admins-middleware/admin-duplicated-exists";
 
 const adminsRepository = new PrismaAdminsRepository();
 const adminsController = new AdminsController(adminsRepository);
@@ -18,3 +19,12 @@ adminsRoutes.post(
   adminAlreadyExists(adminsRepository),
   adminsController.create
 );
+
+adminsRoutes.patch(
+  "/profile",
+  validateToken,
+  adminDuplicatedExists(adminsRepository),
+  adminsController.update
+);
+
+adminsRoutes.delete("/profile", validateToken, adminsController.delete);

@@ -22,6 +22,7 @@ export const validateToken = async (
     req.user = {
       id: decoded.sub,
       username: decoded.username,
+      is_admin: decoded.is_admin,
     };
     return next();
   });

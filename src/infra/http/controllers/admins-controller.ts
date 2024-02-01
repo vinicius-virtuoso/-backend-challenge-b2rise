@@ -29,6 +29,7 @@ export class AdminsController {
       req.body,
       this.adminsRepository
     );
+
     return res.status(200).json(user);
   }
 

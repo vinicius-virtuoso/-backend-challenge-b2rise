@@ -3,16 +3,15 @@ import { PrismaUsersRepository } from "@/infra/database/repositories/prisma-user
 
 import { authSchemaRequest } from "@/app/interfaces/auth-interfaces";
 import { validateBody } from "@/app/middlewares/validate-body";
-import { AuthController } from "@/infra/database/mappers/auth-controller";
+import { AuthUserController } from "../controllers/auth-users-controller";
 
 const usersRepository = new PrismaUsersRepository();
-const authController = new AuthController(usersRepository);
+const authController = new AuthUserController(usersRepository);
 
-export const authRoutes = Router();
+export const authUserRoutes = Router();
 
-authRoutes.post("/", validateBody(authSchemaRequest), authController.execute);
-authRoutes.post(
-  "/admin",
+authUserRoutes.post(
+  "/",
   validateBody(authSchemaRequest),
-  authController.execute_admin
+  authController.execute
 );
