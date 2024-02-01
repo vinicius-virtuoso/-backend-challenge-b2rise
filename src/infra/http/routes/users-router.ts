@@ -5,6 +5,7 @@ import { userAlreadyExists } from "@/app/middlewares/users-middleware/user-alrea
 import { userSchemaRequest } from "@/app/interfaces/users-interfaces";
 import { validateBody } from "@/app/middlewares/validate-body";
 import { validateToken } from "@/app/security/token/validate-token";
+import { userDuplicatedExists } from "@/app/middlewares/users-middleware/user-duplicated-exists";
 
 const usersRepository = new PrismaUsersRepository();
 const usersController = new UsersController(usersRepository);
@@ -19,3 +20,10 @@ usersRoutes.post(
 );
 
 usersRoutes.get("/profile", validateToken, usersController.findOne);
+
+usersRoutes.patch(
+  "/profile",
+  validateToken,
+  userDuplicatedExists(usersRepository),
+  usersController.update
+);

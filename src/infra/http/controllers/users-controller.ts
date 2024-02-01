@@ -2,6 +2,7 @@ import { IUserRequest } from "@/app/interfaces/users-interfaces";
 import { UsersRepository } from "@/app/repositories/users-repository";
 import { userCreateService } from "@/app/services/users/users-create";
 import { userGetService } from "@/app/services/users/users-get";
+import { usersUpdateService } from "@/app/services/users/users-update";
 
 import { Request, Response } from "express";
 
@@ -19,7 +20,6 @@ export class UsersController {
   }
 
   async findOne(req: Request, res: Response) {
-    console.log(req.user);
     const user = await userGetService(req.user.id, this.usersRepository);
     return res.status(200).json(user);
   }
@@ -29,7 +29,12 @@ export class UsersController {
   }
 
   async update(req: Request, res: Response) {
-    return res.status(200).json();
+    const user = await usersUpdateService(
+      req.user.id,
+      req.body,
+      this.usersRepository
+    );
+    return res.status(200).json(user);
   }
 
   async delete(req: Request, res: Response) {

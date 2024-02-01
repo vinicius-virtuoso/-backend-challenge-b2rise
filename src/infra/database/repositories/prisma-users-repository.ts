@@ -1,5 +1,6 @@
 import { Users } from "@/app/entities/users-entity";
 import {
+  IUserRequest,
   IUserResponse,
   IUserWithPasswordResponse,
 } from "@/app/interfaces/users-interfaces";
@@ -48,5 +49,17 @@ export class PrismaUsersRepository implements UsersRepository {
       where: { id: userId },
     });
     return user ? PrismaUsersMapper.toDomain(user) : null;
+  }
+
+  async update(
+    userId: string,
+    data: Partial<IUserRequest>
+  ): Promise<IUserResponse> {
+    const user = await prisma.users.update({
+      where: { id: userId },
+      data,
+    });
+
+    return PrismaUsersMapper.toDomain(user);
   }
 }

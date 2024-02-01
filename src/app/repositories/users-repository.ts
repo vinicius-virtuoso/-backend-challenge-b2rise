@@ -1,5 +1,6 @@
 import { Users } from "../entities/users-entity";
 import {
+  IUserRequest,
   IUserResponse,
   IUserWithPasswordResponse,
 } from "../interfaces/users-interfaces";
@@ -15,4 +16,9 @@ export abstract class UsersRepository {
   ): Promise<IUserResponse | null>;
 
   abstract findById(id: string): Promise<IUserResponse | null>;
+
+  abstract update(
+    userId: string,
+    data: Partial<IUserRequest>
+  ): Promise<IUserResponse>;
 }
