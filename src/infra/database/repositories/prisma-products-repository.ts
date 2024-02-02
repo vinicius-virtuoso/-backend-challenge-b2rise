@@ -28,8 +28,9 @@ export class PrismaProductsRepository implements ProductsRepository {
     return product ? PrismaProductsMapper.toDomain(product) : null;
   }
 
-  getAll(): Promise<IProductResponse[]> {
-    throw new Error("Method not implemented.");
+  async getAll(): Promise<IProductResponse[]> {
+    const products = await prisma.products.findMany();
+    return products.map(PrismaProductsMapper.toDomain);
   }
   async update(
     productId: string,
@@ -42,7 +43,7 @@ export class PrismaProductsRepository implements ProductsRepository {
 
     return PrismaProductsMapper.toDomain(product);
   }
-  delete(id: string): Promise<void> {
-    throw new Error("Method not implemented.");
+  async delete(id: string): Promise<void> {
+    await prisma.products.delete({ where: { id } });
   }
 }

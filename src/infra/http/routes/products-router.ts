@@ -6,11 +6,15 @@ import { productSchemaRequest } from "@/app/interfaces/products-interfaces";
 import { validateToken } from "@/app/security/token/validate-token";
 import { isAdmin } from "@/app/middlewares/admins-middleware/is-admin";
 import { productAlreadyExists } from "@/app/middlewares/products-middleware/products-already-exists";
+import { productNotFound } from "@/app/middlewares/products-middleware/products-not-found";
+import { productDuplicatedExists } from "@/app/middlewares/products-middleware/products-duplicated-exists";
 
 const productsRepository = new PrismaProductsRepository();
 const productController = new ProductsController(productsRepository);
 
 export const productsRoutes = Router();
+
+productsRoutes.get("/", productController.findAll);
 
 productsRoutes.post(
   "/",
@@ -19,4 +23,27 @@ productsRoutes.post(
   isAdmin,
   productAlreadyExists(productsRepository),
   productController.create
+);
+
+productsRoutes.get(
+  "/:productId",
+  productNotFound(productsRepository),
+  productController.findOne
+);
+
+productsRoutes.patch(
+  "/:productId",
+  validateToken,
+  isAdmin,
+  productNotFound(productsRepository),
+  productDuplicatedExists(productsRepository),
+  productController.update
+);
+
+productsRoutes.delete(
+  "/:productId",
+  validateToken,
+  isAdmin,
+  productNotFound(productsRepository),
+  productController.delete
 );
