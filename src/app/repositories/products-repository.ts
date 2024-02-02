@@ -10,7 +10,10 @@ export abstract class ProductsRepository {
 
   abstract getAll(): Promise<IProductResponse[]>;
 
-  abstract update(data: Partial<IProductResponse>): Promise<IProductResponse>;
+  abstract update(
+    productId: string,
+    data: Partial<IProductResponse>
+  ): Promise<IProductResponse>;
 
   abstract delete(id: string): Promise<void>;
 }

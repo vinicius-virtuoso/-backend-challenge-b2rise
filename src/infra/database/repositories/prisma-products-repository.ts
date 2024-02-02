@@ -31,8 +31,16 @@ export class PrismaProductsRepository implements ProductsRepository {
   getAll(): Promise<IProductResponse[]> {
     throw new Error("Method not implemented.");
   }
-  update(data: Partial<IProductRequest>): Promise<IProductResponse> {
-    throw new Error("Method not implemented.");
+  async update(
+    productId: string,
+    data: Partial<IProductRequest>
+  ): Promise<IProductResponse> {
+    const product = await prisma.products.update({
+      where: { id: productId },
+      data,
+    });
+
+    return PrismaProductsMapper.toDomain(product);
   }
   delete(id: string): Promise<void> {
     throw new Error("Method not implemented.");
