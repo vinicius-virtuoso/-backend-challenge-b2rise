@@ -6,6 +6,8 @@ export abstract class ProductsRepository {
 
   abstract findById(id: string): Promise<IProductResponse | null>;
 
+  abstract findByTitle(title: string): Promise<IProductResponse | null>;
+
   abstract getAll(): Promise<IProductResponse[]>;
 
   abstract update(data: Partial<IProductResponse>): Promise<IProductResponse>;
