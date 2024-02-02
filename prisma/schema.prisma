@@ -18,6 +18,7 @@ model Products {
   category           String               @db.VarChar(50)
   image              String               @db.VarChar(200)
   PurchaseOrderItems PurchaseOrderItems[]
+  CartItems          CartItems[]
 
   @@map("products")
 }
@@ -30,6 +31,7 @@ model Users {
   first_name     String           @db.VarChar(50)
   last_name      String           @db.VarChar(50)
   PurchaseOrders PurchaseOrders[]
+  Carts          Carts?
 
   @@map("users")
 }
@@ -65,4 +67,29 @@ model PurchaseOrderItems {
   price    Decimal @default(0.0) @db.Decimal(15, 2)
 
   @@map("purchase-order-items")
+}
+
+model Carts {
+  id       String      @id @default(uuid())
+  user     Users       @relation(fields: [userId], references: [id])
+  userId   String      @unique
+  total    Decimal     @default(0.0) @db.Decimal(15, 2)
+  count    Int         @default(0)
+  products CartItems[]
+
+  @@map("carts")
+}
+
+model CartItems {
+  id String @id @default(uuid())
+
+  cart   Carts  @relation(fields: [cartId], references: [id])
+  cartId String
+
+  product    Products @relation(fields: [productsId], references: [id])
+  productsId String
+
+  quantity Int @default(0)
+
+  @@map("carts-items")
 }
