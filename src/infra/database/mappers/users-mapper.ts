@@ -4,35 +4,21 @@ import { Users as RawUsers } from "@app/entities/users-entity";
 import {
   IUserResponse,
   IUserWithPasswordResponse,
+  userSchemaRequest,
+  userSchemaResponse,
+  userSchemaWithPasswordResponse,
 } from "@app/interfaces/users-interfaces";
 
 export class PrismaUsersMapper {
-  static toPrisma(user: Omit<RawUsers, "id">) {
-    const result = {
-      email: user.email,
-      username: user.username,
-      password: user.password,
-      first_name: user.first_name,
-      last_name: user.last_name,
-    };
-
-    return result;
+  static toPrisma(user: RawUsers) {
+    return userSchemaRequest.parse(user);
   }
 
   static toDomain(raw: UsersPrisma): IUserResponse {
-    return {
-      id: raw.id,
-      email: raw.email,
-      username: raw.username,
-      first_name: raw.first_name,
-      last_name: raw.last_name,
-    };
+    return userSchemaResponse.parse(raw);
   }
 
   static toDomainWithPassword(raw: UsersPrisma): IUserWithPasswordResponse {
-    return {
-      ...this.toDomain(raw),
-      password: raw.password,
-    };
+    return userSchemaWithPasswordResponse.parse(raw);
   }
 }
