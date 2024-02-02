@@ -5,16 +5,13 @@ export const productSchemaRequest = z.object({
   price: z.number().min(1),
   description: z.string().min(1),
   category: z.string().min(1),
-  image: z
-    .string()
-    .optional()
-    .default("https://placehold.co/600x400?text=Product\nImage"),
+  image: z.string().min(1).max(200),
 });
 
 export const productSchemaResponse = z.object({
   id: z.string(),
   title: z.string(),
-  price: z.number(),
+  price: z.number().or(z.any()),
   description: z.string(),
   category: z.string(),
   image: z.string(),
