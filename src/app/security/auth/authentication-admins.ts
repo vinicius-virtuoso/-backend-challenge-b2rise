@@ -9,7 +9,7 @@ export const authenticationAdmin = async (
   usersRepository: AdminsRepository = new PrismaAdminsRepository()
 ) => {
   const findUser = await usersRepository.findByUsername(credential.username);
-  console.log(findUser);
+
   if (!findUser) {
     throw new AppError("Credentials invalid.", 401);
   }
