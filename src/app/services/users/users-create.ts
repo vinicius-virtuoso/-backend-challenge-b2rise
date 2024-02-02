@@ -7,7 +7,7 @@ import { PrismaUsersRepository } from "@/infra/database/repositories/prisma-user
 export const userCreateService = async (
   data: IUserRequest,
   usersRepository: UsersRepository = new PrismaUsersRepository()
-): Promise<IUserResponse> => {
+) => {
   const { password } = data;
 
   // const passwordHashed = await hash(password, 12);

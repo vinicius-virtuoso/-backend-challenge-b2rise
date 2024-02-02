@@ -7,6 +7,5 @@ export const adminUpdateService = async (
   data: Partial<IAdminRequest>,
   usersRepository: AdminsRepository = new PrismaAdminsRepository()
 ) => {
-  console.log(data);
   return await usersRepository.update(userId, data);
 };

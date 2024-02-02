@@ -6,13 +6,19 @@ import { adminAlreadyExists } from "@/app/middlewares/admins-middleware/admin-al
 import { PrismaAdminsRepository } from "@/infra/database/repositories/prisma-admins-repository";
 import { validateToken } from "@/app/security/token/validate-token";
 import { adminDuplicatedExists } from "@/app/middlewares/admins-middleware/admin-duplicated-exists";
+import { adminNotFound } from "@/app/middlewares/admins-middleware/admin-not-found";
 
 const adminsRepository = new PrismaAdminsRepository();
 const adminsController = new AdminsController(adminsRepository);
 
 export const adminsRoutes = Router();
 
-adminsRoutes.get("/profile", validateToken, adminsController.findOne);
+adminsRoutes.get(
+  "/profile",
+  validateToken,
+  adminNotFound(adminsRepository),
+  adminsController.findOne
+);
 adminsRoutes.post(
   "/",
   validateBody(adminSchemaRequest),
@@ -23,8 +29,14 @@ adminsRoutes.post(
 adminsRoutes.patch(
   "/profile",
   validateToken,
+  adminNotFound(adminsRepository),
   adminDuplicatedExists(adminsRepository),
   adminsController.update
 );
 
-adminsRoutes.delete("/profile", validateToken, adminsController.delete);
+adminsRoutes.delete(
+  "/profile",
+  validateToken,
+  adminNotFound(adminsRepository),
+  adminsController.delete
+);

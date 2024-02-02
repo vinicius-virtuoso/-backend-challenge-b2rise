@@ -7,6 +7,5 @@ export const userUpdateService = async (
   data: Partial<IUserRequest>,
   usersRepository: UsersRepository = new PrismaUsersRepository()
 ) => {
-  const user = await usersRepository.update(userId, data);
-  return user;
+  return await usersRepository.update(userId, data);
 };
