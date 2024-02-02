@@ -12,5 +12,5 @@ export const cartItemsSchemaResponse = z.object({
   product: productSchemaResponse,
 });
 
-export type cartItemsRequest = z.infer<typeof cartItemsSchemaRequest>;
-export type cartItemsResponse = z.infer<typeof cartItemsSchemaResponse>;
+export type ICartItemsRequest = z.infer<typeof cartItemsSchemaRequest>;
+export type ICartItemsResponse = z.infer<typeof cartItemsSchemaResponse>;
