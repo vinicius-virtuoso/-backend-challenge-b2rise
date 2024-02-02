@@ -3,9 +3,9 @@ import { AdminsRepository } from "@/app/repositories/admins-repository";
 import { PrismaAdminsRepository } from "@/infra/database/repositories/prisma-admins-repository";
 
 export const adminUpdateService = async (
-  userId: string,
+  adminId: string,
   data: Partial<IAdminRequest>,
-  usersRepository: AdminsRepository = new PrismaAdminsRepository()
+  adminsRepository: AdminsRepository = new PrismaAdminsRepository()
 ) => {
-  return await usersRepository.update(userId, data);
+  return await adminsRepository.update(adminId, data);
 };

@@ -5,8 +5,8 @@ import { PrismaAdminsRepository } from "@/infra/database/repositories/prisma-adm
 
 export const adminCreateService = async (
   data: IAdminRequest,
-  usersRepository: AdminsRepository = new PrismaAdminsRepository()
+  adminsRepository: AdminsRepository = new PrismaAdminsRepository()
 ) => {
-  const user = new Admins(data);
-  return await usersRepository.create(user);
+  const admin = new Admins(data);
+  return await adminsRepository.create(admin);
 };
