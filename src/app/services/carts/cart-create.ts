@@ -6,6 +6,6 @@ export const cartCreateService = async (
   data: ICartRequest,
   cartsRepository: CartsRepository
 ) => {
-  const cart = new Carts(data);
+  const cart = new Carts({ user_id: data.userId });
   await cartsRepository.create(cart);
 };
