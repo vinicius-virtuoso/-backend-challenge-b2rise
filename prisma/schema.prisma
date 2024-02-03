@@ -11,12 +11,13 @@ datasource db {
 }
 
 model Products {
-  id                 String               @id @default(uuid())
-  title              String               @unique @db.VarChar(30)
-  price              Decimal              @db.Decimal(11, 2)
-  description        String               @db.VarChar(100)
-  category           String               @db.VarChar(50)
-  image              String               @db.VarChar(200)
+  id          String  @id @default(uuid())
+  title       String  @unique @db.VarChar(30)
+  price       Decimal @db.Decimal(11, 2)
+  description String  @db.VarChar(100)
+  category    String  @db.VarChar(50)
+  image       String  @db.VarChar(200)
+
   PurchaseOrderItems PurchaseOrderItems[]
   CartItems          CartItems[]
 
@@ -24,12 +25,13 @@ model Products {
 }
 
 model Users {
-  id             String           @id @default(uuid())
-  email          String           @unique @db.VarChar(100)
-  username       String           @unique @db.VarChar(50)
-  password       String           @db.VarChar(50)
-  first_name     String           @db.VarChar(50)
-  last_name      String           @db.VarChar(50)
+  id         String @id @default(uuid())
+  email      String @unique @db.VarChar(100)
+  username   String @unique @db.VarChar(50)
+  password   String @db.VarChar(50)
+  first_name String @db.VarChar(50)
+  last_name  String @db.VarChar(50)
+
   PurchaseOrders PurchaseOrders[]
   Carts          Carts?
 
@@ -45,51 +47,51 @@ model Admins {
 }
 
 model PurchaseOrders {
-  id                 String               @id @default(uuid())
-  user_id            Users                @relation(fields: [usersId], references: [id])
-  usersId            String
-  date               DateTime             @default(now())
+  id      String   @id @default(uuid())
+  user    Users    @relation(fields: [user_id], references: [id])
+  user_id String
+  date    DateTime @default(now())
+
   PurchaseOrderItems PurchaseOrderItems[]
 
   @@map("purchase_orders")
 }
 
 model PurchaseOrderItems {
-  id String @id @default(uuid())
-
-  purchase_order_id PurchaseOrders @relation(fields: [purchaseOrdersId], references: [id])
-
-  product_id       Products @relation(fields: [productsId], references: [id])
-  productsId       String
-  purchaseOrdersId String
-
+  id       String  @id @default(uuid())
   quantity Int     @default(0)
   price    Decimal @default(0.0) @db.Decimal(15, 2)
+
+  purchaseOrder     PurchaseOrders @relation(fields: [purchase_order_id], references: [id])
+  purchase_order_id String
+
+  product    Products @relation(fields: [product_id], references: [id])
+  product_id String
 
   @@map("purchase-order-items")
 }
 
 model Carts {
-  id       String      @id @default(uuid())
-  user     Users       @relation(fields: [userId], references: [id])
-  userId   String      @unique
-  total    Decimal     @default(0.0) @db.Decimal(15, 2)
-  count    Int         @default(0)
+  id      String  @id @default(uuid())
+  user    Users   @relation(fields: [user_id], references: [id])
+  user_id String  @unique
+  total   Decimal @default(0.0) @db.Decimal(15, 2)
+  count   Int     @default(0)
+
   products CartItems[]
 
   @@map("carts")
 }
 
 model CartItems {
-  id String @id @default(uuid())
+  id       String @id @default(uuid())
+  quantity Int    @default(0)
 
-  cart   Carts  @relation(fields: [cartId], references: [id])
-  cartId String
+  cart    Carts  @relation(fields: [cart_id], references: [id])
+  cart_id String
 
-  product    Products @relation(fields: [productsId], references: [id])
-  productsId String
-
-  quantity Int @default(0)
+  product    Products @relation(fields: [product_id], references: [id])
+  product_id String
 
   @@map("carts-items")
 }
