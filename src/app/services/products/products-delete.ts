@@ -3,7 +3,7 @@ import { PrismaProductsRepository } from "@/infra/database/repositories/prisma-p
 
 export const productDeleteService = async (
   productId: string,
-  productsRepository: ProductsRepository = new PrismaProductsRepository()
+  productsRepository: ProductsRepository
 ) => {
   await productsRepository.delete(productId);
 };

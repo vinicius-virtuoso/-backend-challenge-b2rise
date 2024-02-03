@@ -1,15 +1,13 @@
 import { CartsItemsRepository } from "@/app/repositories/carts-items";
 import { CartsRepository } from "@/app/repositories/carts-repository";
 import { ProductsRepository } from "@/app/repositories/products-repository";
-import { PrismaCartsItemsRepository } from "@/infra/database/repositories/prisma-carts-items-repository";
-import { PrismaCartsRepository } from "@/infra/database/repositories/prisma-carts-repository";
-import { PrismaProductsRepository } from "@/infra/database/repositories/prisma-products-repository";
+
 export const cartAddProduct = async (
   userId: string,
   productId: string,
-  cartsRepository: CartsRepository = new PrismaCartsRepository(),
-  productsRepository: ProductsRepository = new PrismaProductsRepository(),
-  cartsItemsRepository: CartsItemsRepository = new PrismaCartsItemsRepository()
+  cartsRepository: CartsRepository,
+  productsRepository: ProductsRepository,
+  cartsItemsRepository: CartsItemsRepository
 ) => {
   let cart = await cartsRepository.get(userId);
   let count = 0;

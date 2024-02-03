@@ -1,12 +1,10 @@
 import { CartsItemsRepository } from "@/app/repositories/carts-items";
 import { CartsRepository } from "@/app/repositories/carts-repository";
-import { PrismaCartsItemsRepository } from "@/infra/database/repositories/prisma-carts-items-repository";
-import { PrismaCartsRepository } from "@/infra/database/repositories/prisma-carts-repository";
 
 export const cartRemoveAllService = async (
   userId: string,
-  cartsRepository: CartsRepository = new PrismaCartsRepository(),
-  cartsItemsRepository: CartsItemsRepository = new PrismaCartsItemsRepository()
+  cartsRepository: CartsRepository,
+  cartsItemsRepository: CartsItemsRepository
 ) => {
   let cart = await cartsRepository.get(userId);
   let count = 0;

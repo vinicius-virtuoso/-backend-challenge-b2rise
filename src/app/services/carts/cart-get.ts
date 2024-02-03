@@ -3,7 +3,7 @@ import { PrismaCartsRepository } from "@/infra/database/repositories/prisma-cart
 
 export const cartGetService = async (
   userId: string,
-  cartsRepository: CartsRepository = new PrismaCartsRepository()
+  cartsRepository: CartsRepository
 ) => {
   return await cartsRepository.get(userId);
 };
