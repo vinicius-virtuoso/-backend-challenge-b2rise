@@ -9,19 +9,11 @@ import { cartRemoveProductService } from "@/app/services/carts/cart-remove-produ
 import { Request, Response } from "express";
 
 export class CartsController {
-  cartsRepository: CartsRepository;
-  productsRepository: ProductsRepository;
-  cartItemsRepository: CartsItemsRepository;
-
   constructor(
-    cartsRepository: CartsRepository,
-    productsRepository: ProductsRepository,
-    cartItemsRepository: CartsItemsRepository
-  ) {
-    this.cartsRepository = cartsRepository;
-    this.productsRepository = productsRepository;
-    this.cartItemsRepository = cartItemsRepository;
-  }
+    private cartsRepository: CartsRepository,
+    private productsRepository: ProductsRepository,
+    private cartItemsRepository: CartsItemsRepository
+  ) {}
 
   async findOne(req: Request, res: Response) {
     const cart = await cartGetService(req.user.id, this.cartsRepository);
@@ -43,7 +35,8 @@ export class CartsController {
     const cart = await cartDecrementProductService(
       req.user.id,
       req.params.productId,
-      this.cartsRepository
+      this.cartsRepository,
+      this.cartItemsRepository
     );
     return res.status(200).json(cart);
   }

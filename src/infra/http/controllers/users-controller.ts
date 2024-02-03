@@ -8,14 +8,10 @@ import { userUpdateService } from "@/app/services/users/users-update";
 import { Request, Response } from "express";
 
 export class UsersController {
-  usersRepository: UsersRepository;
-
-  constructor(userRepository: UsersRepository) {
-    this.usersRepository = userRepository;
-  }
+  constructor(private usersRepository: UsersRepository) {}
 
   async create(req: Request, res: Response) {
-    const data = req.body as IUserRequest;
+    const data: IUserRequest = req.body;
     const user = await userCreateService(data, this.usersRepository);
     return res.status(201).json(user);
   }

@@ -7,11 +7,7 @@ import { adminGetService } from "@/app/services/admins/admins-get";
 import { Request, Response } from "express";
 
 export class AdminsController {
-  adminsRepository: AdminsRepository;
-
-  constructor(adminsRepository: AdminsRepository) {
-    this.adminsRepository = adminsRepository;
-  }
+  constructor(private adminsRepository: AdminsRepository) {}
 
   async create(req: Request, res: Response) {
     const user = await adminCreateService(req.body, this.adminsRepository);

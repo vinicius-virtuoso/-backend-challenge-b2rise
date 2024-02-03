@@ -7,11 +7,7 @@ import { productUpdateService } from "@/app/services/products/products-update";
 import { Request, Response } from "express";
 
 export class ProductsController {
-  productsRepository: ProductsRepository;
-
-  constructor(productsRepository: ProductsRepository) {
-    this.productsRepository = productsRepository;
-  }
+  constructor(private productsRepository: ProductsRepository) {}
   async create(req: Request, res: Response) {
     const product = await productCreateService(
       req.body,
