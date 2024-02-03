@@ -6,14 +6,14 @@ import {
 } from "../interfaces/carts-items-interfaces";
 import { Replace } from "@/helpers/Replace";
 
-export class Cart {
+export class Carts {
   private _id: string;
-  private props: ICartResponse;
+  private props: Omit<ICartResponse, "id">;
 
   constructor(
     props: Replace<
-      ICartResponse,
-      { products?: ICartItemsRequest[]; count?: number; total?: number }
+      Omit<ICartResponse, "id">,
+      { products?: ICartItemsResponse[]; count?: number; total?: number }
     >,
     id?: string
   ) {
@@ -56,9 +56,5 @@ export class Cart {
 
   public get products(): ICartItemsResponse[] {
     return this.props.products;
-  }
-
-  public set products(products: ICartItemsRequest[]) {
-    this.props.products = products;
   }
 }
