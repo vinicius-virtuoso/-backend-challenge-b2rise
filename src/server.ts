@@ -8,6 +8,7 @@ import { adminsRoutes } from "./infra/http/routes/admins-router";
 import { authAdminRoutes } from "./infra/http/routes/auth-admin-router";
 import { authUserRoutes } from "./infra/http/routes/auth-user-router";
 import { productsRoutes } from "./infra/http/routes/products-router";
+import { cartsRoutes } from "./infra/http/routes/carts-router";
 
 export class Server {
   private app: Express;
@@ -30,6 +31,7 @@ export class Server {
     this.app.use("/admin", adminsRoutes);
     this.app.use("/users", usersRoutes);
     this.app.use("/products", productsRoutes);
+    this.app.use("/cart", cartsRoutes);
   }
 
   public init(port: number = 3000) {
