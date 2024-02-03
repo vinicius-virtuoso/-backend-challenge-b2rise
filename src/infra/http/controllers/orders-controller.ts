@@ -28,7 +28,6 @@ export class OrdersController {
       req.params.orderId,
       this.ordersRepository
     );
-    console.log(order + "sas");
 
     return res.status(200).json(order);
   }
