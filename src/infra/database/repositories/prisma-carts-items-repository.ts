@@ -9,8 +9,8 @@ export class PrismaCartsItemsRepository implements CartsItemsRepository {
   async create(data: ICartItemsRequest): Promise<void> {
     await prisma.cartItems.create({
       data: {
-        cartId: data.cartId,
-        productsId: data.product.id,
+        cart_id: data.cartId,
+        product_id: data.product.id,
         quantity: data.quantity,
       },
     });
@@ -21,11 +21,11 @@ export class PrismaCartsItemsRepository implements CartsItemsRepository {
   ): Promise<ICartItemsResponse | null> {
     const cartItem = await prisma.cartItems.findFirst({
       where: {
-        AND: [{ cartId }, { productsId: productId }],
+        AND: [{ cart_id: cartId }, { product_id: productId }],
       },
       select: {
         id: true,
-        cartId: true,
+        cart_id: true,
         quantity: true,
         product: true,
       },
@@ -46,7 +46,7 @@ export class PrismaCartsItemsRepository implements CartsItemsRepository {
     await prisma.cartItems.update({
       where: {
         id: cartItemsId,
-        AND: [{ cartId }, { productsId: productId }],
+        AND: [{ cart_id: cartId }, { product_id: productId }],
       },
       data: {
         quantity,
@@ -61,14 +61,14 @@ export class PrismaCartsItemsRepository implements CartsItemsRepository {
     await prisma.cartItems.delete({
       where: {
         id: cartItemsId,
-        AND: [{ cartId }, { productsId: productId }],
+        AND: [{ cart_id: cartId }, { product_id: productId }],
       },
     });
   }
 
   async delete(cartId: string): Promise<void> {
     await prisma.cartItems.deleteMany({
-      where: { cartId },
+      where: { cart_id: cartId },
     });
   }
 }

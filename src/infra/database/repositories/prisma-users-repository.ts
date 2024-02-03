@@ -11,8 +11,6 @@ import { PrismaUsersMapper } from "../mappers/users-mapper";
 
 export class PrismaUsersRepository implements UsersRepository {
   async create(data: Users): Promise<IUserResponse> {
-    console.log(data);
-
     const user = await prisma.users.create({
       data: {
         email: data.email,
