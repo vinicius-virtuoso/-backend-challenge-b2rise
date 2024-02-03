@@ -7,7 +7,7 @@ export const cartSchemaRequest = z.object({
 
 export const cartSchemaResponse = z.object({
   id: z.string(),
-  userId: z.string(),
+  user_id: z.string(),
   count: z.number(),
   total: z.number().or(z.any()),
   products: z.array(cartItemsSchemaResponse),
