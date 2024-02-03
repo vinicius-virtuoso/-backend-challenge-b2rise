@@ -1,5 +1,5 @@
 import { validateBody } from "@/app/middlewares/validate-body";
-import { Router } from "express";
+import { Request, Response, Router } from "express";
 import { AdminsController } from "../controllers/admins-controller";
 import { adminSchemaRequest } from "@/app/interfaces/admins-interfaces";
 import { adminAlreadyExists } from "@/app/middlewares/admins-middleware/admin-already-exists";
@@ -17,13 +17,13 @@ adminsRoutes.get(
   "/profile",
   validateToken,
   adminNotFound(adminsRepository),
-  adminsController.findOne
+  (req: Request, res: Response) => adminsController.findOne(req, res)
 );
 adminsRoutes.post(
   "/",
   validateBody(adminSchemaRequest),
   adminAlreadyExists(adminsRepository),
-  adminsController.create
+  (req: Request, res: Response) => adminsController.create(req, res)
 );
 
 adminsRoutes.patch(
@@ -31,12 +31,12 @@ adminsRoutes.patch(
   validateToken,
   adminNotFound(adminsRepository),
   adminDuplicatedExists(adminsRepository),
-  adminsController.update
+  (req: Request, res: Response) => adminsController.update(req, res)
 );
 
 adminsRoutes.delete(
   "/profile",
   validateToken,
   adminNotFound(adminsRepository),
-  adminsController.delete
+  (req: Request, res: Response) => adminsController.delete(req, res)
 );

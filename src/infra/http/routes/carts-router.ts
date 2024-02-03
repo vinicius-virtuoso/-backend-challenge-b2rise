@@ -1,5 +1,5 @@
 import { PrismaCartsRepository } from "@/infra/database/repositories/prisma-carts-repository";
-import { Router } from "express";
+import { Request, Response, Router } from "express";
 import { CartsController } from "../controllers/carts-controller";
 import { PrismaCartsItemsRepository } from "@/infra/database/repositories/prisma-carts-items-repository";
 import { PrismaProductsRepository } from "@/infra/database/repositories/prisma-products-repository";
@@ -28,7 +28,7 @@ cartsRoutes.get(
   validateToken,
   userNotFound(usersRepository),
   cartBeforeCreate(cartsRepository),
-  cartsController.findOne
+  (req: Request, res: Response) => cartsController.findOne(req, res)
 );
 
 cartsRoutes.post(
@@ -37,7 +37,7 @@ cartsRoutes.post(
   userNotFound(usersRepository),
   productNotFound(productsRepository),
   cartBeforeCreate(cartsRepository),
-  cartsController.addProduct
+  (req: Request, res: Response) => cartsController.addProduct(req, res)
 );
 
 cartsRoutes.patch(
@@ -46,7 +46,7 @@ cartsRoutes.patch(
   userNotFound(usersRepository),
   cartNotFound(cartsRepository),
   cartProductNotFound(cartsRepository, cartsItemsRepository),
-  cartsController.subProduct
+  (req: Request, res: Response) => cartsController.subProduct(req, res)
 );
 
 cartsRoutes.delete(
@@ -55,7 +55,7 @@ cartsRoutes.delete(
   userNotFound(usersRepository),
   cartNotFound(cartsRepository),
   cartProductNotFound(cartsRepository, cartsItemsRepository),
-  cartsController.removeProduct
+  (req: Request, res: Response) => cartsController.removeProduct(req, res)
 );
 
 cartsRoutes.delete(
@@ -63,5 +63,5 @@ cartsRoutes.delete(
   validateToken,
   userNotFound(usersRepository),
   cartNotFound(cartsRepository),
-  cartsController.removeProductAll
+  (req: Request, res: Response) => cartsController.removeProductAll(req, res)
 );

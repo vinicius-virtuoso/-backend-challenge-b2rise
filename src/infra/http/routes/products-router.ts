@@ -1,5 +1,5 @@
 import { PrismaProductsRepository } from "@/infra/database/repositories/prisma-products-repository";
-import { Router } from "express";
+import { Request, Response, Router } from "express";
 import { ProductsController } from "../controllers/products-controller";
 import { validateBody } from "@/app/middlewares/validate-body";
 import { productSchemaRequest } from "@/app/interfaces/products-interfaces";
@@ -14,21 +14,23 @@ const productController = new ProductsController(productsRepository);
 
 export const productsRoutes = Router();
 
-productsRoutes.get("/", productController.findAll);
+productsRoutes.get("/", (req: Request, res: Response) =>
+  productController.findAll(req, res)
+);
 
 productsRoutes.post(
   "/",
-  validateBody(productSchemaRequest),
   validateToken,
   isAdmin,
+  validateBody(productSchemaRequest),
   productAlreadyExists(productsRepository),
-  productController.create
+  (req: Request, res: Response) => productController.create(req, res)
 );
 
 productsRoutes.get(
   "/:productId",
   productNotFound(productsRepository),
-  productController.findOne
+  (req: Request, res: Response) => productController.findOne(req, res)
 );
 
 productsRoutes.patch(
@@ -37,7 +39,7 @@ productsRoutes.patch(
   isAdmin,
   productNotFound(productsRepository),
   productDuplicatedExists(productsRepository),
-  productController.update
+  (req: Request, res: Response) => productController.update(req, res)
 );
 
 productsRoutes.delete(
@@ -45,5 +47,5 @@ productsRoutes.delete(
   validateToken,
   isAdmin,
   productNotFound(productsRepository),
-  productController.delete
+  (req: Request, res: Response) => productController.delete(req, res)
 );
