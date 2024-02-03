@@ -8,6 +8,7 @@ export const cartItemsSchemaRequest = z.object({
 });
 
 export const cartItemsSchemaResponse = z.object({
+  id: z.string(),
   quantity: z.number(),
   product: productSchemaResponse,
 });
