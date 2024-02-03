@@ -1,9 +1,6 @@
 import { randomUUID } from "node:crypto";
 import { ICartResponse } from "./../interfaces/carts-interfaces";
-import {
-  ICartItemsRequest,
-  ICartItemsResponse,
-} from "../interfaces/carts-items-interfaces";
+import { ICartItemsResponse } from "../interfaces/carts-items-interfaces";
 import { Replace } from "@/helpers/Replace";
 
 export class Carts {
@@ -31,7 +28,7 @@ export class Carts {
   }
 
   public get userId(): string {
-    return this.props.userId;
+    return this.props.user_id;
   }
 
   public get total(): number {
@@ -42,8 +39,8 @@ export class Carts {
     return this.props.count;
   }
 
-  public set userId(value: string) {
-    this.props.userId = value;
+  public set user_id(value: string) {
+    this.props.user_id = value;
   }
 
   public set total(value: number) {
