@@ -5,14 +5,37 @@ export class PrismaOrdersItemsRepository implements OrdersItemsRepository {
   async create(
     orderId: string,
     productId: string,
-    price: number
-  ): Promise<void> {
-    await prisma.purchaseOrderItems.create({
+    price: number,
+    quantity: number
+  ): Promise<any> {
+    const orderItem = await prisma.purchaseOrderItems.create({
       data: {
         purchase_order_id: orderId,
         product_id: productId,
-        price: price,
+        price,
+        quantity,
+      },
+
+      select: {
+        purchaseOrder: {
+          select: {
+            id: true,
+            user_id: true,
+            date: true,
+          },
+        },
+        quantity: true,
+        price: true,
+        product: {
+          select: {
+            id: true,
+            title: true,
+            description: true,
+            image: true,
+          },
+        },
       },
     });
+    return orderItem;
   }
 }

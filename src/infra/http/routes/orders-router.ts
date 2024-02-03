@@ -7,7 +7,11 @@ import { PrismaOrdersRepository } from "@/infra/database/repositories/prisma-ord
 import { PrismaUsersRepository } from "@/infra/database/repositories/prisma-users-repository";
 import { Request, Response, Router } from "express";
 import { OrdersController } from "../controllers/orders-controller";
-import { cartIsEmpty } from "@/app/middlewares/checkout-middleware.ts/cart-is-empty";
+import { cartBeforeCreate } from "@/app/middlewares/carts-middlewares/cart-before-create";
+import { cartIsEmpty } from "@/app/middlewares/orders-middleware.ts/cart-is-empty";
+import { orderNotFound } from "@/app/middlewares/orders-middleware.ts/order-not-found";
+
+export const ordersRoutes = Router();
 
 const usersRepository = new PrismaUsersRepository();
 const cartsRepository = new PrismaCartsRepository();
@@ -20,12 +24,26 @@ const orderController = new OrdersController(
   ordersItemsRepository
 );
 
-export const ordersRoutes = Router();
-
 ordersRoutes.post(
   "/",
   validateToken,
   userNotFound(usersRepository),
+  cartBeforeCreate(cartsRepository),
   cartIsEmpty(cartsRepository),
   (req: Request, res: Response) => orderController.create(req, res)
+);
+
+ordersRoutes.get(
+  "/",
+  validateToken,
+  userNotFound(usersRepository),
+  (req: Request, res: Response) => orderController.findAll(req, res)
+);
+
+ordersRoutes.get(
+  "/:orderId",
+  validateToken,
+  userNotFound(usersRepository),
+  orderNotFound(ordersRepository),
+  (req: Request, res: Response) => orderController.findOne(req, res)
 );

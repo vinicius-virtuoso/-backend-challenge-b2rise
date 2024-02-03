@@ -11,6 +11,8 @@ import { cartBeforeCreate } from "@/app/middlewares/carts-middlewares/cart-befor
 import { cartNotFound } from "@/app/middlewares/carts-middlewares/cart-not-found";
 import { cartProductNotFound } from "@/app/middlewares/carts-middlewares/cart-product-not-found";
 
+export const cartsRoutes = Router();
+
 const usersRepository = new PrismaUsersRepository();
 const cartsRepository = new PrismaCartsRepository();
 const productsRepository = new PrismaProductsRepository();
@@ -20,8 +22,6 @@ const cartsController = new CartsController(
   productsRepository,
   cartsItemsRepository
 );
-
-export const cartsRoutes = Router();
 
 cartsRoutes.get(
   "/",
