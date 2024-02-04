@@ -33,21 +33,91 @@ export class PrismaProductsRepository implements ProductsRepository {
   async getAll(
     page: number,
     take: number,
+    category: string,
+    title: string,
     min_price: number,
     max_price: number
   ): Promise<[IProductResponse[], number]> {
     const [products, pages] = await prisma.$transaction([
       prisma.products.findMany({
         where: {
+          AND: [
+            category !== "undefined" &&
+            category !== undefined &&
+            category !== null
+              ? {
+                  category: {
+                    contains: category,
+                    mode: "insensitive",
+                  },
+                  price: { lte: max_price, gte: min_price },
+                }
+              : {
+                  category: {
+                    not: category,
+                    mode: "insensitive",
+                  },
+                },
+            title !== "undefined" && title !== undefined && title !== null
+              ? {
+                  title: {
+                    contains: title,
+                    mode: "insensitive",
+                  },
+                  price: { lte: max_price, gte: min_price },
+                }
+              : {
+                  title: {
+                    not: title,
+                    mode: "insensitive",
+                  },
+                },
+          ],
           price: { lte: max_price, gte: min_price },
         },
-        skip: page - 1,
+        skip: (page - 1) * take,
         take,
         orderBy: {
           price: "desc",
         },
       }),
-      prisma.products.count(),
+      prisma.products.count({
+        where: {
+          AND: [
+            category !== "undefined" &&
+            category !== undefined &&
+            category !== null
+              ? {
+                  category: {
+                    contains: category,
+                    mode: "insensitive",
+                  },
+                  price: { lte: max_price, gte: min_price },
+                }
+              : {
+                  category: {
+                    not: category,
+                    mode: "insensitive",
+                  },
+                },
+            title !== "undefined" && title !== undefined && title !== null
+              ? {
+                  title: {
+                    contains: title,
+                    mode: "insensitive",
+                  },
+                  price: { lte: max_price, gte: min_price },
+                }
+              : {
+                  title: {
+                    not: title,
+                    mode: "insensitive",
+                  },
+                },
+          ],
+          price: { lte: max_price, gte: min_price },
+        },
+      }),
     ]);
 
     return [products, pages];
