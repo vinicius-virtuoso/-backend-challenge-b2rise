@@ -7,6 +7,11 @@ export abstract class ProductsRepository {
   abstract findById(id: string): Promise<IProductResponse | null>;
 
   abstract findByTitle(title: string): Promise<IProductResponse | null>;
+  abstract findByCategory(
+    page: number,
+    take: number,
+    category: string
+  ): Promise<[IProductResponse[], number]>;
 
   abstract getAll(
     page: number,
