@@ -1,7 +1,7 @@
 import { describe, test, expect } from "vitest";
 import { makeAdminFactory } from "@test/config/factories/make-admin-factory";
 import { InMemoryAdminsRepository } from "@test/config/memory-repositories/in-memory-admins-repository";
-import { adminUpdateService } from "./admin-update";
+import { adminUpdateService } from "./admins-update";
 
 describe("Test Service Update profile Admin", () => {
   test("should to be able to update profile of user", async () => {
