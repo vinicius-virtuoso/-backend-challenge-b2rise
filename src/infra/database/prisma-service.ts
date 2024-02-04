@@ -1,4 +1,11 @@
 import { PrismaClient } from "@prisma/client";
 
 export const prisma = new PrismaClient();
-// use `prisma` in your application to read and write data in your DB
+prisma
+  .$connect()
+  .then(() => {
+    console.log("Connected to database");
+  })
+  .catch((err) => {
+    console.error(err);
+  });
