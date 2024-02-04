@@ -8,7 +8,12 @@ export abstract class ProductsRepository {
 
   abstract findByTitle(title: string): Promise<IProductResponse | null>;
 
-  abstract getAll(): Promise<IProductResponse[]>;
+  abstract getAll(
+    page: number,
+    take: number,
+    min_price: number,
+    max_price: number
+  ): Promise<[IProductResponse[], number]>;
 
   abstract update(
     productId: string,

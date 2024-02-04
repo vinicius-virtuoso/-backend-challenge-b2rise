@@ -25,7 +25,21 @@ export class ProductsController {
   }
 
   async findAll(req: Request, res: Response) {
-    const products = await productsGetAllService(this.productsRepository);
+    const {
+      page = 1,
+      take = 5,
+
+      min_price = 1,
+      max_price = 9999999,
+    } = req.query;
+    const products = await productsGetAllService(
+      String(req.baseUrl),
+      Number(page),
+      Number(take),
+      Number(min_price),
+      Number(max_price),
+      this.productsRepository
+    );
     return res.status(200).json(products);
   }
 

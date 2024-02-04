@@ -6,6 +6,8 @@ import {
 import { ProductsRepository } from "@/app/repositories/products-repository";
 import { prisma } from "../prisma-service";
 import { PrismaProductsMapper } from "../mappers/products-mapper";
+import { skip } from "node:test";
+import { string } from "zod";
 
 export class PrismaProductsRepository implements ProductsRepository {
   async create(data: Products): Promise<IProductResponse> {
@@ -28,10 +30,29 @@ export class PrismaProductsRepository implements ProductsRepository {
     return product ? PrismaProductsMapper.toDomain(product) : null;
   }
 
-  async getAll(): Promise<IProductResponse[]> {
-    const products = await prisma.products.findMany();
-    return products.map(PrismaProductsMapper.toDomain);
+  async getAll(
+    page: number,
+    take: number,
+    min_price: number,
+    max_price: number
+  ): Promise<[IProductResponse[], number]> {
+    const [products, pages] = await prisma.$transaction([
+      prisma.products.findMany({
+        where: {
+          price: { lte: max_price, gte: min_price },
+        },
+        skip: page - 1,
+        take,
+        orderBy: {
+          price: "desc",
+        },
+      }),
+      prisma.products.count(),
+    ]);
+
+    return [products, pages];
   }
+
   async update(
     productId: string,
     data: Partial<IProductRequest>
