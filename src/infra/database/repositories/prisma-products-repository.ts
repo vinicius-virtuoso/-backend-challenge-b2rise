@@ -6,8 +6,6 @@ import {
 import { ProductsRepository } from "@/app/repositories/products-repository";
 import { prisma } from "../prisma-service";
 import { PrismaProductsMapper } from "../mappers/products-mapper";
-import { skip } from "node:test";
-import { string } from "zod";
 
 export class PrismaProductsRepository implements ProductsRepository {
   async create(data: Products): Promise<IProductResponse> {
@@ -30,6 +28,32 @@ export class PrismaProductsRepository implements ProductsRepository {
     return product ? PrismaProductsMapper.toDomain(product) : null;
   }
 
+  async findByCategory(
+    page: number,
+    take: number,
+    category: string
+  ): Promise<[IProductResponse[], number]> {
+    const [products, total] = await prisma.$transaction([
+      prisma.products.findMany({
+        where: {
+          category,
+        },
+        skip: (page - 1) * take,
+        take,
+        orderBy: {
+          price: "desc",
+        },
+      }),
+      prisma.products.count({
+        where: {
+          category,
+        },
+      }),
+    ]);
+
+    return [products, total];
+  }
+
   async getAll(
     page: number,
     take: number,
@@ -38,7 +62,7 @@ export class PrismaProductsRepository implements ProductsRepository {
     min_price: number,
     max_price: number
   ): Promise<[IProductResponse[], number]> {
-    const [products, pages] = await prisma.$transaction([
+    const [products, total] = await prisma.$transaction([
       prisma.products.findMany({
         where: {
           AND: [
@@ -120,7 +144,7 @@ export class PrismaProductsRepository implements ProductsRepository {
       }),
     ]);
 
-    return [products, pages];
+    return [products, total];
   }
 
   async update(
