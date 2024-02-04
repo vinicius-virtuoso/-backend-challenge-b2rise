@@ -32,14 +32,12 @@ export class InMemoryUsersRepository implements UsersRepository {
   } | null> {
     throw new Error("Method not implemented.");
   }
-  findById(id: string): Promise<{
-    id: string;
-    email: string;
-    username: string;
-    first_name: string;
-    last_name: string;
-  } | null> {
-    throw new Error("Method not implemented.");
+  async findById(id: string): Promise<IUserResponse | null> {
+    const user = this.users.find((user) => user.id === id);
+    if (!user) {
+      return null;
+    }
+    return TestUsersMapper.toDomain(user);
   }
   update(
     userId: string,
