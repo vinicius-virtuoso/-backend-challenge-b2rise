@@ -33,6 +33,10 @@ productsRoutes.get(
   (req: Request, res: Response) => productController.findOne(req, res)
 );
 
+productsRoutes.get("/:categoryProduct", (req: Request, res: Response) =>
+  productController.findByCategory(req, res)
+);
+
 productsRoutes.patch(
   "/:productId",
   validateToken,
