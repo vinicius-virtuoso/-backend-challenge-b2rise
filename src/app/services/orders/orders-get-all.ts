@@ -7,11 +7,7 @@ export const ordersGetAllService = async (
   userId: string,
   ordersRepository: OrdersRepository
 ) => {
-  const [orders, total] = await ordersRepository.getAllByUser(
-    page,
-    take,
-    userId
-  );
+  const [orders, total] = await ordersRepository.getAll(page, take, userId);
 
   const pagesTotal = Math.ceil(total / take);
 

@@ -8,7 +8,7 @@ export abstract class OrdersRepository {
     orderId: string
   ): Promise<IOrderResponse | null>;
 
-  abstract getAllByUser(
+  abstract getAll(
     page: number,
     take: number,
     userId: string

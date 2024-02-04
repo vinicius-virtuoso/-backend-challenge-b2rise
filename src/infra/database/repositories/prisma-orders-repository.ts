@@ -59,14 +59,27 @@ export class PrismaOrdersRepository implements OrdersRepository {
     };
   }
 
-  async getAllByUser(
+  async getAll(
     page: number,
     take: number,
     userId: string
   ): Promise<[IOrderResponse[], number]> {
+    userId = "";
     const [orders, total] = await prisma.$transaction([
       prisma.purchaseOrders.findMany({
-        where: { user_id: userId },
+        where: {
+          AND: [
+            userId
+              ? {
+                  user_id: userId,
+                }
+              : {
+                  user_id: {
+                    not: "",
+                  },
+                },
+          ],
+        },
         select: {
           id: true,
           user_id: true,
@@ -78,6 +91,7 @@ export class PrismaOrdersRepository implements OrdersRepository {
             },
           },
         },
+
         skip: (page - 1) * take,
         take,
         orderBy: {
@@ -85,7 +99,19 @@ export class PrismaOrdersRepository implements OrdersRepository {
         },
       }),
       prisma.purchaseOrders.count({
-        where: { user_id: userId },
+        where: {
+          AND: [
+            userId
+              ? {
+                  user_id: userId,
+                }
+              : {
+                  user_id: {
+                    not: "",
+                  },
+                },
+          ],
+        },
       }),
     ]);
 
