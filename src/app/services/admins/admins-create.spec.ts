@@ -5,19 +5,19 @@ import { adminCreateService } from "./admins-create";
 
 describe("Test Service Create Admin", () => {
   test("should not to be return admin password", async () => {
-    const usersRepo = new InMemoryAdminsRepository();
+    const adminsRepo = new InMemoryAdminsRepository();
     const data = makeAdminFactory();
 
-    const admin = await adminCreateService(data, usersRepo);
+    const admin = await adminCreateService(data, adminsRepo);
 
     expect(admin).not.toHaveProperty("password");
   });
 
   test("should to be able create user", async () => {
-    const usersRepo = new InMemoryAdminsRepository();
+    const adminsRepo = new InMemoryAdminsRepository();
     const data = makeAdminFactory();
 
-    const admin = await adminCreateService(data, usersRepo);
+    const admin = await adminCreateService(data, adminsRepo);
 
     expect(admin).toEqual(
       expect.objectContaining({
