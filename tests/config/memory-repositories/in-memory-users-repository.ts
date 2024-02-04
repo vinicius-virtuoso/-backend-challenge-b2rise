@@ -14,27 +14,26 @@ export class InMemoryUsersRepository implements UsersRepository {
     this.users.push(TestUsersMapper.toDatabase(data));
     return TestUsersMapper.toDomain(data);
   }
-  findByUsername(username: string): Promise<{
-    id: string;
-    email: string;
-    username: string;
-    first_name: string;
-    last_name: string;
-    password: string;
-  } | null> {
-    throw new Error("Method not implemented.");
+  async findByUsername(
+    username: string
+  ): Promise<IUserWithPasswordResponse | null> {
+    const user = this.users.find((user) => user.username === username);
+    if (!user) {
+      return null;
+    }
+    return TestUsersMapper.toDomainWithPassword(user);
   }
-  findByUsernameOrEmail(
+  async findByUsernameOrEmail(
     email: string,
     username: string
-  ): Promise<{
-    id: string;
-    email: string;
-    username: string;
-    first_name: string;
-    last_name: string;
-  } | null> {
-    throw new Error("Method not implemented.");
+  ): Promise<IUserResponse | null> {
+    const user = this.users.find(
+      (user) => user.username === username || user.email === email
+    );
+    if (!user) {
+      return null;
+    }
+    return TestUsersMapper.toDomain(user);
   }
   async findById(id: string): Promise<IUserResponse | null> {
     const user = this.users.find((user) => user.id === id);

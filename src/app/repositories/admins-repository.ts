@@ -16,7 +16,7 @@ export abstract class AdminsRepository {
   abstract update(
     userId: string,
     data: Partial<IAdminRequest>
-  ): Promise<IAdminResponse>;
+  ): Promise<IAdminResponse | null>;
 
   abstract delete(userId: string): Promise<void>;
 }
