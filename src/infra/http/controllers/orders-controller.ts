@@ -33,7 +33,11 @@ export class OrdersController {
   }
 
   async findAll(req: Request, res: Response) {
+    const { page = 1, take = 5 } = req.query;
     const orders = await ordersGetAllService(
+      String(req.baseUrl),
+      Number(page),
+      Number(take),
       req.user.id,
       this.ordersRepository
     );

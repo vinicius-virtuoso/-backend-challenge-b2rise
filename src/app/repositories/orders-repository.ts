@@ -8,7 +8,11 @@ export abstract class OrdersRepository {
     orderId: string
   ): Promise<IOrderResponse | null>;
 
-  abstract getAll(userId: string): Promise<IOrderResponse[]>;
+  abstract getAllByUser(
+    page: number,
+    take: number,
+    userId: string
+  ): Promise<[IOrderResponse[], number]>;
 
   abstract delete(userId: string, orderId: string): Promise<void>;
 }

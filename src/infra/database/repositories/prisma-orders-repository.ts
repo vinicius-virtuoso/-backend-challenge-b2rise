@@ -59,34 +59,47 @@ export class PrismaOrdersRepository implements OrdersRepository {
     };
   }
 
-  async getAll(userId: string): Promise<IOrderResponse[]> {
-    const orders = await prisma.purchaseOrders.findMany({
-      where: { user_id: userId },
-      select: {
-        id: true,
-        user_id: true,
-        date: true,
-        PurchaseOrderItems: {
-          select: {
-            quantity: true,
-            product: true,
+  async getAllByUser(
+    page: number,
+    take: number,
+    userId: string
+  ): Promise<[IOrderResponse[], number]> {
+    const [orders, total] = await prisma.$transaction([
+      prisma.purchaseOrders.findMany({
+        where: { user_id: userId },
+        select: {
+          id: true,
+          user_id: true,
+          date: true,
+          PurchaseOrderItems: {
+            select: {
+              quantity: true,
+              product: true,
+            },
           },
         },
-      },
-    });
+        skip: (page - 1) * take,
+        take,
+        orderBy: {
+          date: "desc",
+        },
+      }),
+      prisma.purchaseOrders.count({
+        where: { user_id: userId },
+      }),
+    ]);
 
-    if (orders.length <= 0) {
-      return [];
-    }
-
-    return orders.map((order) => {
-      return {
-        id: order.id,
-        user_id: order.user_id,
-        date: order.date,
-        products: order.PurchaseOrderItems,
-      };
-    });
+    return [
+      orders.map((order) => {
+        return {
+          id: order.id,
+          user_id: order.user_id,
+          date: order.date,
+          products: order.PurchaseOrderItems,
+        };
+      }),
+      total,
+    ];
   }
   async delete(userId: string, orderId: string): Promise<void> {
     await prisma.purchaseOrders.delete({
