@@ -1,4 +1,5 @@
 import { ProductsRepository } from "@/app/repositories/products-repository";
+import { productsByCategory } from "@/app/services/products/products-by-category";
 import { productCreateService } from "@/app/services/products/products-create";
 import { productDeleteService } from "@/app/services/products/products-delete";
 import { productsGetAllService } from "@/app/services/products/products-get-all";
@@ -41,6 +42,18 @@ export class ProductsController {
       String(title),
       Number(min_price),
       Number(max_price),
+      this.productsRepository
+    );
+    return res.status(200).json(products);
+  }
+
+  async findByCategory(req: Request, res: Response) {
+    const { page = 1, take = 5, category } = req.query;
+    const products = await productsByCategory(
+      String(req.baseUrl),
+      String(category),
+      Number(take),
+      Number(page),
       this.productsRepository
     );
     return res.status(200).json(products);
