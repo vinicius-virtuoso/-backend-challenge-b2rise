@@ -11,6 +11,8 @@ export abstract class ProductsRepository {
   abstract getAll(
     page: number,
     take: number,
+    category: string,
+    title: string,
     min_price: number,
     max_price: number
   ): Promise<[IProductResponse[], number]>;
