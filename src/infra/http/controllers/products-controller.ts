@@ -48,10 +48,10 @@ export class ProductsController {
   }
 
   async findByCategory(req: Request, res: Response) {
-    const { page = 1, take = 5, category } = req.query;
+    const { page = 1, take = 5 } = req.query;
     const products = await productsByCategory(
       String(req.baseUrl),
-      String(category),
+      req.params.categoryProduct,
       Number(take),
       Number(page),
       this.productsRepository
