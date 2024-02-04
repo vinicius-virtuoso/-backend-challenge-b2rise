@@ -7,7 +7,11 @@ export const productsByCategory = async (
   page: number,
   productsRepository: ProductsRepository
 ) => {
-  const [products, total] = await productsRepository.findByCategory(category);
+  const [products, total] = await productsRepository.findByCategory(
+    page,
+    take,
+    category
+  );
   const pagesTotal = Math.ceil(total / take);
 
   return {
