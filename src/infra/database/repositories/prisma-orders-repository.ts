@@ -64,7 +64,6 @@ export class PrismaOrdersRepository implements OrdersRepository {
     take: number,
     userId: string
   ): Promise<[IOrderResponse[], number]> {
-    userId = "";
     const [orders, total] = await prisma.$transaction([
       prisma.purchaseOrders.findMany({
         where: {
