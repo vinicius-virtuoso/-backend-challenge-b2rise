@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "vitest -v",
+    "test": "vitest",
     "dev": "tsx watch src/main.ts"
   },
   "description": "",

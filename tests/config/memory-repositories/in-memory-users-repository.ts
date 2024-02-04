@@ -1,18 +1,16 @@
 import { Users } from "@/app/entities/users-entity";
-import { IUserRequest, IUserResponse } from "@/app/interfaces/users-interfaces";
+import { IUserResponse } from "@/app/interfaces/users-interfaces";
 import { UsersRepository } from "@/app/repositories/users-repository";
 import { TestUsersMapper } from "../mappers/users-mapper";
 
 export class InMemoryUsersRepository implements UsersRepository {
-  users: IUserRequest[] = [];
+  users: IUserResponse[] = [];
 
   async create(data: Users): Promise<IUserResponse> {
     this.users.push(TestUsersMapper.toDatabase(data));
     return TestUsersMapper.toDomain(data);
   }
-  findByUsername(
-    username: string
-  ): Promise<{
+  findByUsername(username: string): Promise<{
     id: string;
     email: string;
     username: string;
@@ -34,9 +32,7 @@ export class InMemoryUsersRepository implements UsersRepository {
   } | null> {
     throw new Error("Method not implemented.");
   }
-  findById(
-    id: string
-  ): Promise<{
+  findById(id: string): Promise<{
     id: string;
     email: string;
     username: string;
@@ -63,7 +59,7 @@ export class InMemoryUsersRepository implements UsersRepository {
   }> {
     throw new Error("Method not implemented.");
   }
-  delete(userId: string): Promise<void> {
-    throw new Error("Method not implemented.");
+  async delete(userId: string): Promise<void> {
+    this.users = this.users.filter((user) => user.id !== userId);
   }
 }

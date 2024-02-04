@@ -1,9 +1,10 @@
-import { Users } from "@/app/entities/users-entity";
-import { IUserRequest } from "@/app/interfaces/users-interfaces";
+import { IUserResponse } from "@/app/interfaces/users-interfaces";
+import { randomUUID } from "node:crypto";
 
-type Override = Partial<IUserRequest>;
+type Override = Partial<IUserResponse>;
 export function makeUserFactory(override: Override = {}) {
   return {
+    id: override.id ?? randomUUID(),
     email: "user-test-01@test.com",
     username: "user-test-01",
     password: "123456789",
