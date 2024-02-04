@@ -13,7 +13,7 @@ describe("Test Service Create Admin", () => {
     expect(admin).not.toHaveProperty("password");
   });
 
-  test("should to be able create user", async () => {
+  test("should to be able create admin", async () => {
     const adminsRepo = new InMemoryAdminsRepository();
     const data = makeAdminFactory();
 

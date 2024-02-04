@@ -4,7 +4,7 @@ import { InMemoryAdminsRepository } from "@test/config/memory-repositories/in-me
 import { adminUpdateService } from "./admins-update";
 
 describe("Test Service Update profile Admin", () => {
-  test("should to be able to update profile of user", async () => {
+  test("should to be able to update profile of admin", async () => {
     const adminsRepo = new InMemoryAdminsRepository();
     const data = makeAdminFactory();
     adminsRepo.admins.push(data);

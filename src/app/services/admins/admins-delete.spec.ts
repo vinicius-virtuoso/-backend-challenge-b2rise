@@ -3,8 +3,8 @@ import { adminDeleteService } from "./admins-delete";
 import { makeAdminFactory } from "@test/config/factories/make-admin-factory";
 import { InMemoryAdminsRepository } from "@test/config/memory-repositories/in-memory-admins-repository";
 
-describe("Test Service Delete User", () => {
-  test("should to be able to delete user", async () => {
+describe("Test Service Delete Admin", () => {
+  test("should to be able to delete admin", async () => {
     const adminsRepo = new InMemoryAdminsRepository();
     const data = makeAdminFactory();
     adminsRepo.admins.push(data);
