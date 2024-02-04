@@ -28,7 +28,8 @@ export class ProductsController {
     const {
       page = 1,
       take = 5,
-
+      category,
+      title,
       min_price = 1,
       max_price = 9999999,
     } = req.query;
@@ -36,6 +37,8 @@ export class ProductsController {
       String(req.baseUrl),
       Number(page),
       Number(take),
+      String(category),
+      String(title),
       Number(min_price),
       Number(max_price),
       this.productsRepository
