@@ -20,7 +20,7 @@ export abstract class UsersRepository {
   abstract update(
     userId: string,
     data: Partial<IUserRequest>
-  ): Promise<IUserResponse>;
+  ): Promise<IUserResponse | null>;
 
   abstract delete(userId: string): Promise<void>;
 }

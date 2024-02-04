@@ -52,7 +52,7 @@ export class PrismaUsersRepository implements UsersRepository {
   async update(
     userId: string,
     data: Partial<IUserRequest>
-  ): Promise<IUserResponse> {
+  ): Promise<IUserResponse | null> {
     const user = await prisma.users.update({
       where: { id: userId },
       data,
