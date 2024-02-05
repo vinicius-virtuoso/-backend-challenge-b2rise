@@ -18,7 +18,7 @@ export class Orders {
     return this._id;
   }
 
-  public get userId(): string {
+  public get user_id(): string {
     return this.props.user_id;
   }
 
@@ -26,11 +26,15 @@ export class Orders {
     return this.props.products;
   }
 
-  public set userId(value: string) {
+  public set user_id(value: string) {
     this.props.user_id = value;
   }
 
   public set products(value: ICartItemsResponse[]) {
     this.products = value;
+  }
+
+  public get date(): Date {
+    return this.props.date;
   }
 }

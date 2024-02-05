@@ -8,7 +8,7 @@
   },
   "description": "",
   "keywords": [],
-  "author": "",
+  "author": "Vinícius Eduardo Virtuoso",
   "license": "ISC",
   "devDependencies": {
     "@types/bcryptjs": "^2.4.6",
