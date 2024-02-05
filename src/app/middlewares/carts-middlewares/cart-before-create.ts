@@ -9,7 +9,7 @@ export const cartBeforeCreate = (cartsRepository: CartsRepository) => {
     const cart = await cartsRepository.get(user_id);
 
     if (!cart) {
-      await cartCreateService({ userId: user_id }, cartsRepository);
+      await cartCreateService(user_id, cartsRepository);
       return next();
     }
 

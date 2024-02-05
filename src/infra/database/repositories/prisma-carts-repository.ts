@@ -9,7 +9,7 @@ export class PrismaCartsRepository implements CartsRepository {
       data: {
         count: 0,
         total: 0,
-        user_id: data.userId,
+        user_id: data.user_id,
       },
       include: {
         products: {
@@ -22,9 +22,9 @@ export class PrismaCartsRepository implements CartsRepository {
       },
     });
   }
-  async get(userId: string): Promise<ICartResponse | null> {
+  async get(user_id: string): Promise<ICartResponse | null> {
     const cart = await prisma.carts.findFirst({
-      where: { user_id: userId },
+      where: { user_id },
       include: {
         products: {
           select: {

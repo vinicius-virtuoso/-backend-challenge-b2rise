@@ -2,7 +2,7 @@ import { z } from "zod";
 import { productSchemaResponse } from "./products-interfaces";
 
 export const cartItemsSchemaRequest = z.object({
-  cartId: z.string().min(1),
+  cart_id: z.string().min(1),
   quantity: z.number().default(1),
   product: productSchemaResponse,
 });
