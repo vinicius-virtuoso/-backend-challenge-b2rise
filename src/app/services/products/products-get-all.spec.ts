@@ -1,6 +1,5 @@
 import { makeProductFactory } from "@test/config/factories/make-product-factory";
 import { InMemoryProductsRepository } from "@test/config/memory-repositories/in-memory-products-repository";
-import { title } from "process";
 import { describe, test, expect } from "vitest";
 import { productsGetAllService } from "./products-get-all";
 
