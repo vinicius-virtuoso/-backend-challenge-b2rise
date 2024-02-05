@@ -12,7 +12,7 @@ export const cartAddProduct = async (
   // Este serviço exatamente as seguintes ações:
   // [x] Verifica se existe o produto no carrinho, caso já tenha-o ele irá apenas atualizar a quantidade.
   // [x] Caso não aja o produto no carrinho ele irá adiciona-lo com uma quantidade de apenas 1.
-  // [x] Em qualquer um dos dois casos ele irá atualizará o contagem de todos os produtos levando em conta a quantidade de cada e o preço
+  // [x] Em qualquer um dos dois casos ele irá atualizará o contagem de todos os produtos levando em conta a quantidade de cada produto e o preço
   // multiplicado pela quantidade.
 
   let cart = await cartsRepository.get(userId);
