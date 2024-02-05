@@ -1,23 +1,17 @@
+import { describe, test, expect } from "vitest";
 import { makeCartFactory } from "@test/config/factories/make-cart-factory";
 import { makeCartItemFactory } from "@test/config/factories/make-cart-items-factory";
 import { makeProductFactory } from "@test/config/factories/make-product-factory";
 import { makeUserFactory } from "@test/config/factories/make-user-factory";
-import {
-  InMemoryCartsItemsRepository,
-  cart_itemsMemory,
-} from "@test/config/memory-repositories/in-memory-carts-items-repository";
+import { cart_itemsMemory } from "@test/config/memory-repositories/in-memory-carts-items-repository";
 import {
   InMemoryCartsRepository,
   cartsMemory,
 } from "@test/config/memory-repositories/in-memory-carts-repository";
 import { InMemoryOrdersItemsRepository } from "@test/config/memory-repositories/in-memory-orders-items-repository";
 import { InMemoryOrdersRepository } from "@test/config/memory-repositories/in-memory-orders-repository";
-import {
-  InMemoryProductsRepository,
-  productsMemory,
-} from "@test/config/memory-repositories/in-memory-products-repository";
+import { productsMemory } from "@test/config/memory-repositories/in-memory-products-repository";
 import { InMemoryUsersRepository } from "@test/config/memory-repositories/in-memory-users-repository";
-import { describe, test, expect } from "vitest";
 import { orderCreateService } from "./order-create";
 
 describe("Test create Order purchase", () => {
