@@ -134,8 +134,6 @@ export class InMemoryProductsRepository implements ProductsRepository {
   }
 
   async delete(productId: string): Promise<void> {
-    productsMemory = this.products.filter(
-      (product) => product.id !== productId
-    );
+    this.products = this.products.filter((product) => product.id !== productId);
   }
 }
