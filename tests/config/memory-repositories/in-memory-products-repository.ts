@@ -5,6 +5,7 @@ import {
 } from "@/app/interfaces/products-interfaces";
 import { ProductsRepository } from "@/app/repositories/products-repository";
 import { TestProductsMapper } from "../mappers/products-mapper";
+import { error } from "console";
 
 export let productsMemory: IProductResponse[] = [];
 export class InMemoryProductsRepository implements ProductsRepository {
@@ -60,55 +61,43 @@ export class InMemoryProductsRepository implements ProductsRepository {
     min_price: number,
     max_price: number
   ): Promise<[IProductResponse[], number]> {
-    const productsList = this.products.map((product) => {
-      let output = product;
-      if (
-        category !== "undefined" &&
-        category !== undefined &&
-        category !== null &&
-        title !== "undefined" &&
-        title !== undefined &&
-        title !== null
-      ) {
-        if (
-          product.category === category &&
-          product.title === title &&
-          product.price >= min_price &&
-          product.price <= max_price
-        ) {
-          output = product;
+    const productsList = this.products.filter((product) => {
+      if (category === "undefined" && title === "undefined") {
+        if (product.price >= min_price && product.price <= max_price) {
+          return product;
         }
       }
 
-      if (
-        category !== "undefined" &&
-        category !== undefined &&
-        category !== null
-      ) {
+      if (category !== "undefined" && title !== "undefined") {
         if (
-          product.category === category &&
+          product.category.toLowerCase().includes(category.toLowerCase()) &&
+          product.title.toLowerCase().includes(title.toLowerCase()) &&
           product.price >= min_price &&
           product.price <= max_price
         ) {
-          output = product;
+          return product;
         }
       }
 
-      if (title !== "undefined" && title !== undefined && title !== null) {
+      if (category !== "undefined") {
         if (
-          product.title === title &&
+          product.category.toLowerCase().includes(category.toLowerCase()) &&
           product.price >= min_price &&
           product.price <= max_price
         ) {
-          output = product;
+          return product;
         }
       }
 
-      if (product.price >= min_price && product.price <= max_price) {
-        output = product;
+      if (title !== "undefined") {
+        if (
+          product.title.toLowerCase().includes(title.toLowerCase()) &&
+          product.price >= min_price &&
+          product.price <= max_price
+        ) {
+          return product;
+        }
       }
-
-      return output;
     });
 
     return [
