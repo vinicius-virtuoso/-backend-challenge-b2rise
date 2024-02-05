@@ -8,13 +8,19 @@ import { TestProductsMapper } from "../mappers/products-mapper";
 
 export let productsMemory: IProductResponse[] = [];
 export class InMemoryProductsRepository implements ProductsRepository {
+  products: IProductResponse[] = [];
+
+  constructor() {
+    this.products = productsMemory;
+  }
+
   async create(data: Products): Promise<IProductResponse> {
-    productsMemory.push(TestProductsMapper.toDatabase(data));
+    this.products.push(TestProductsMapper.toDatabase(data));
     return TestProductsMapper.toDomain(data);
   }
 
   async findById(id: string): Promise<IProductResponse | null> {
-    const product = productsMemory.find((product) => product.id === id);
+    const product = this.products.find((product) => product.id === id);
     if (!product) {
       return null;
     }
@@ -22,7 +28,7 @@ export class InMemoryProductsRepository implements ProductsRepository {
   }
 
   async findByTitle(title: string): Promise<IProductResponse | null> {
-    const product = productsMemory.find(
+    const product = this.products.find(
       (product) => product.title.toLowerCase() === title.toLowerCase()
     );
     if (!product) {
@@ -36,7 +42,7 @@ export class InMemoryProductsRepository implements ProductsRepository {
     take: number,
     category: string
   ): Promise<[IProductResponse[], number]> {
-    const productsList = productsMemory.filter(
+    const productsList = this.products.filter(
       (product) => product.category.toLowerCase() === category.toLowerCase()
     );
 
@@ -54,7 +60,7 @@ export class InMemoryProductsRepository implements ProductsRepository {
     min_price: number,
     max_price: number
   ): Promise<[IProductResponse[], number]> {
-    const productsList = productsMemory.map((product) => {
+    const productsList = this.products.map((product) => {
       let output = product;
       if (
         category !== "undefined" &&
@@ -128,7 +134,7 @@ export class InMemoryProductsRepository implements ProductsRepository {
   }
 
   async delete(productId: string): Promise<void> {
-    productsMemory = productsMemory.filter(
+    productsMemory = this.products.filter(
       (product) => product.id !== productId
     );
   }
