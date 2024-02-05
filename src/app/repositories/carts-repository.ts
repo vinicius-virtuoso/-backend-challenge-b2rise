@@ -9,5 +9,5 @@ export abstract class CartsRepository {
   abstract update(
     cartId: string,
     data: { count: number; total: number }
-  ): Promise<ICartResponse>;
+  ): Promise<ICartResponse | null>;
 }

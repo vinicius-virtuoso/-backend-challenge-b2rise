@@ -25,7 +25,7 @@ export abstract class ProductsRepository {
   abstract update(
     productId: string,
     data: Partial<IProductResponse>
-  ): Promise<IProductResponse>;
+  ): Promise<IProductResponse | null>;
 
   abstract delete(id: string): Promise<void>;
 }
