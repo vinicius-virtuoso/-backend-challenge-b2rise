@@ -43,7 +43,14 @@ export class InMemoryOrdersRepository implements OrdersRepository {
     take: number,
     userId: string
   ): Promise<[IOrderResponse[], number]> {
-    throw new Error("Method not implemented.");
+    const productsList = ordersMemory.filter(
+      (order) => order.user_id === userId
+    );
+
+    return [
+      productsList.slice((page - 1) * take, (page - 1) * take + take),
+      productsList.length,
+    ];
   }
   async delete(userId: string, orderId: string): Promise<void> {
     throw new Error("Method not implemented.");
