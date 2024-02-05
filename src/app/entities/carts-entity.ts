@@ -27,7 +27,7 @@ export class Carts {
     return this._id;
   }
 
-  public get userId(): string {
+  public get user_id(): string {
     return this.props.user_id;
   }
 
