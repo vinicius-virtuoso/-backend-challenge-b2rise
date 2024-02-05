@@ -69,15 +69,16 @@ export class InMemoryCartsItemsRepository implements CartsItemsRepository {
     cartId: string,
     productId: string
   ): Promise<void> {
-    console.log();
-
-    this.cart_items = [
-      ...this.cart_items.filter(
-        (item) =>
+    cart_itemsMemory = [
+      ...this.cart_items.filter((item) => {
+        if (
           item.id !== cartItemsId &&
-          item.cart_id !== cartId &&
-          item.product.id !== productId
-      ),
+          item.product.id !== productId &&
+          item.cart_id === cartId
+        ) {
+          return item;
+        }
+      }),
     ];
   }
   async delete(cartId: string): Promise<void> {
