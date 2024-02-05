@@ -69,6 +69,8 @@ export class InMemoryCartsItemsRepository implements CartsItemsRepository {
     cartId: string,
     productId: string
   ): Promise<void> {
+    console.log();
+
     this.cart_items = [
       ...this.cart_items.filter(
         (item) =>
@@ -79,7 +81,7 @@ export class InMemoryCartsItemsRepository implements CartsItemsRepository {
     ];
   }
   async delete(cartId: string): Promise<void> {
-    this.cart_items = [
+    cart_itemsMemory = [
       ...this.cart_items.filter((item) => item.cart_id !== cartId),
     ];
   }
