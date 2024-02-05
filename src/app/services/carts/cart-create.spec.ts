@@ -1,10 +1,7 @@
-import {
-  InMemoryCartsRepository,
-  cartsMemory,
-} from "@test/config/memory-repositories/in-memory-carts-repository";
 import { describe, test, expect } from "vitest";
-import { cartCreateService } from "./cart-create";
+import { InMemoryCartsRepository } from "@test/config/memory-repositories/in-memory-carts-repository";
 import { InMemoryUsersRepository } from "@test/config/memory-repositories/in-memory-users-repository";
+import { cartCreateService } from "./cart-create";
 import { makeUserFactory } from "@test/config/factories/make-user-factory";
 
 describe("Test create shopping cart", () => {
@@ -17,7 +14,7 @@ describe("Test create shopping cart", () => {
 
     await cartCreateService(userFactory.id, cartRepo);
 
-    expect(cartsMemory).toHaveLength(1);
-    expect(cartsMemory[0].user_id).toEqual(userFactory.id);
+    expect(cartRepo.carts).toHaveLength(1);
+    expect(cartRepo.carts[0].user_id).toEqual(userFactory.id);
   });
 });

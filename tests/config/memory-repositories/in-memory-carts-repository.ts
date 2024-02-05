@@ -5,14 +5,21 @@ import { TestCartsMapper } from "../mappers/carts-mapper";
 import { cart_itemsMemory } from "./in-memory-carts-items-repository";
 
 export let cartsMemory: ICartResponse[] = [];
+
 export class InMemoryCartsRepository implements CartsRepository {
+  public carts: ICartResponse[] = [];
+
+  constructor() {
+    this.carts = cartsMemory;
+  }
+
   async create(data: Carts): Promise<ICartResponse> {
     const cart = TestCartsMapper.toDatabase(data);
-    cartsMemory.push(cart);
+    this.carts.push(cart);
     return TestCartsMapper.toDomain(cart);
   }
   async get(userId: string): Promise<ICartResponse | null> {
-    const cart = cartsMemory.find((cart) => cart.user_id === userId);
+    const cart = this.carts.find((cart) => cart.user_id === userId);
 
     if (!cart) {
       return null;
@@ -27,7 +34,7 @@ export class InMemoryCartsRepository implements CartsRepository {
     cartId: string,
     data: { count: number; total: number }
   ): Promise<ICartResponse | null> {
-    const cart = cartsMemory.find((cart) => cart.id === cartId);
+    const cart = this.carts.find((cart) => cart.id === cartId);
 
     if (!cart) {
       return null;

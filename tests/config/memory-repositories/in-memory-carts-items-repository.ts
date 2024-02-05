@@ -11,7 +11,14 @@ export interface ICartItemsResponseWithCartId extends ICartItemsResponse {
 }
 
 export let cart_itemsMemory: ICartItemsResponseWithCartId[] = [];
+
 export class InMemoryCartsItemsRepository implements CartsItemsRepository {
+  cart_items: ICartItemsResponseWithCartId[] = [];
+
+  constructor() {
+    this.cart_items = cart_itemsMemory;
+  }
+
   async create(data: ICartItemsRequest): Promise<void> {
     const foundProduct = productsMemory.find(
       (product) => product.id === data.product.id
@@ -23,14 +30,14 @@ export class InMemoryCartsItemsRepository implements CartsItemsRepository {
         product: foundProduct,
         id: randomUUID(),
       };
-      cart_itemsMemory.push(cartItem);
+      this.cart_items.push(cartItem);
     }
   }
   async get(
     cartId: string,
     productId: string
   ): Promise<ICartItemsResponse | null> {
-    const cartItemFind = cart_itemsMemory.find(
+    const cartItemFind = this.cart_items.find(
       (item) => item.cart_id === cartId && item.product.id === productId
     );
 
@@ -46,7 +53,7 @@ export class InMemoryCartsItemsRepository implements CartsItemsRepository {
     productId: string,
     quantity: number
   ): Promise<void> {
-    const cartItemFind = cart_itemsMemory.find(
+    const cartItemFind = this.cart_items.find(
       (item) =>
         item.cart_id === cartId &&
         item.product.id === productId &&
@@ -62,8 +69,8 @@ export class InMemoryCartsItemsRepository implements CartsItemsRepository {
     cartId: string,
     productId: string
   ): Promise<void> {
-    cart_itemsMemory = [
-      ...cart_itemsMemory.filter(
+    this.cart_items = [
+      ...this.cart_items.filter(
         (item) =>
           item.id !== cartItemsId &&
           item.cart_id !== cartId &&
@@ -72,8 +79,8 @@ export class InMemoryCartsItemsRepository implements CartsItemsRepository {
     ];
   }
   async delete(cartId: string): Promise<void> {
-    cart_itemsMemory = [
-      ...cart_itemsMemory.filter((item) => item.cart_id !== cartId),
+    this.cart_items = [
+      ...this.cart_items.filter((item) => item.cart_id !== cartId),
     ];
   }
 }
