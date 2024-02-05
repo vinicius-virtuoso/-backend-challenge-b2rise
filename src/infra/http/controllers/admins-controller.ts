@@ -1,6 +1,6 @@
 import { AdminsRepository } from "@/app/repositories/admins-repository";
-import { adminDeleteService } from "@/app/services/admins/admin-delete";
-import { adminUpdateService } from "@/app/services/admins/admin-update";
+import { adminDeleteService } from "@/app/services/admins/admins-delete";
+import { adminUpdateService } from "@/app/services/admins/admins-update";
 import { adminCreateService } from "@/app/services/admins/admins-create";
 import { adminGetService } from "@/app/services/admins/admins-get";
 
