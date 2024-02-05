@@ -46,7 +46,7 @@ export class PrismaCartsRepository implements CartsRepository {
   async update(
     cartId: string,
     data: { count: number; total: number }
-  ): Promise<ICartResponse> {
+  ): Promise<ICartResponse | null> {
     return await prisma.carts.update({
       where: { id: cartId },
       data,

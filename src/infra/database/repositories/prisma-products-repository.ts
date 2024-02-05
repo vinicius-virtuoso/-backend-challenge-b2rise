@@ -150,15 +150,19 @@ export class PrismaProductsRepository implements ProductsRepository {
   async update(
     productId: string,
     data: Partial<IProductRequest>
-  ): Promise<IProductResponse> {
+  ): Promise<IProductResponse | null> {
     const product = await prisma.products.update({
       where: { id: productId },
       data,
     });
 
+    if (!product) {
+      return null;
+    }
+
     return PrismaProductsMapper.toDomain(product);
   }
-  async delete(id: string): Promise<void> {
-    await prisma.products.delete({ where: { id } });
+  async delete(productId: string): Promise<void> {
+    await prisma.products.delete({ where: { id: productId } });
   }
 }
