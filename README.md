@@ -1,6 +1,6 @@
 # Backend Challenge B2Rise
 
-### Opa tudo bem? 
+### Opa, tudo bem? 
 Esta é minha conclusão do teste pratico backend challenge da b2rise.
 
 <br>
