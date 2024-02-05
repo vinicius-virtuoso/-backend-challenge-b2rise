@@ -5,7 +5,7 @@ services:
     image: postgres:latest
     container_name: back-challenger
     environment:
-      POSTGRES_USER: test
+      POSTGRES_USER: root
       POSTGRES_PASSWORD: 12345
       POSTGRES_DB: ec-back-challenger
     ports:

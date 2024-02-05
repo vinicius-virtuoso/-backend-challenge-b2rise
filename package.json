@@ -6,7 +6,7 @@
     "test": "vitest",
     "dev": "tsx watch src/main.ts"
   },
-  "description": "",
+  "description": "Api desenvolvido para o teste backend da b2rise",
   "keywords": [],
   "author": "Vinícius Eduardo Virtuoso",
   "license": "ISC",
